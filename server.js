@@ -1,9 +1,14 @@
 const WebSocket = require('ws');
-const PORT = 8080;
-const wsServer = new WebSocket.Server({
-    port: PORT
-});
-wsServer.on('connection', function (socket) {
+const express = require('express');
+const path = require('path');
+const { createServer } = require('http');
+
+const app = express();
+app.use(express.static(path.join(__dirname, '/public')));
+const server = createServer(app);
+const wss = new WebSocket.Server({ server });
+
+wss.on('connection', function (socket) {
     console.log("A client just connected");
     botUrl = undefined
     socket.on('message', function (msg) {
@@ -21,12 +26,12 @@ wsServer.on('connection', function (socket) {
             }
         }
 
-        wsServer.clients.forEach(function (client) {
+        wss.clients.forEach(function (client) {
             client.send("ss"+msg);
         });
-
     });
-
 });
 
-console.log( (new Date()) + " Server is listening on port " + PORT);
+server.listen(8080, function () {
+    console.log('Listening on http://0.0.0.0:8080');
+  });
