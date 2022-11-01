@@ -1,11 +1,8 @@
 const WebSocket = require('ws');
-
 const PORT = 8080;
-
 const wsServer = new WebSocket.Server({
     port: PORT
 });
-
 wsServer.on('connection', function (socket) {
     console.log("A client just connected");
     botUrl = undefined
