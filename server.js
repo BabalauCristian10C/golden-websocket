@@ -18,7 +18,7 @@ wsServer.on('connection', function (socket) {
         } else {
             if(new_message.bot){
                 try{
-                    botUrl.send("message to you") 
+                    botUrl.send("message to youdsa") 
                 } catch {
                     console.log("no bot link is set")
                 }
