@@ -1,6 +1,6 @@
 const WebSocket = require('ws');
 
-const PORT = 5000;
+const PORT = 8080;
 
 const wsServer = new WebSocket.Server({
     port: PORT
@@ -8,7 +8,6 @@ const wsServer = new WebSocket.Server({
 
 wsServer.on('connection', function (socket) {
     console.log("A client just connected");
-
     botUrl = undefined
     socket.on('message', function (msg) {
         console.log("Received message from client: "  + msg);
@@ -18,7 +17,7 @@ wsServer.on('connection', function (socket) {
         } else {
             if(new_message.bot){
                 try{
-                    botUrl.send("message to youdsa") 
+                    botUrl.send("message to you") 
                 } catch {
                     console.log("no bot link is set")
                 }
