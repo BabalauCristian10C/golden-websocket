@@ -16,7 +16,11 @@ wss.on('connection', function (socket) {
         try {
             new_message = JSON.parse(msg.toString())
             wss.clients.forEach(socket=>{
-                socket.send(JSON.stringify(new_message))
+                try {
+                    socket.send(JSON.stringify(new_message))   
+                } catch {
+                    socket.send(new_message.toString())
+                }
             })
             console.log(" buff")
         } catch {
