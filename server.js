@@ -9,8 +9,6 @@ const server = createServer(app);
 const wss = new WebSocket.Server({ server });
 let connected = [], id = 0;
 
-console.log(process.env)
-
 function addClient(client){
     connected.push([id, client])
     return id++;
@@ -32,33 +30,28 @@ function removeClientByValue(client){
     })
 }
 
-let i = 0
-
 wss.on('connection', function (socket) {
     console.log("A client just connected");
-    addClient(socket)
     socket.on('message', function (msg) {
         new_message = JSON.parse(msg)
-        console.log(process.env.BOT_URL)
         if (new_message.botConnection){
-            console.log("Bot url established")
-            process.env.BOT_URL = socket
+            console.log("bot is conected")
         } else {
             if(new_message.bot){
-                try{
-                    const formatedMessage = JSON.stringify({
-                        "message": new_message,
-                        "sender": findClientIdByValue(socket)
-                    })
-                    process.env.BOT_URL.send(formatedMessage)  
-                    console.log("message is sent to bot")
-                } catch {
-                    console.log("no bot link is set")
-                }
+                const formatedMessage = JSON.stringify({
+                    "message": new_message,
+                    "sender": new_message.sessionId,
+                    "bot":true
+                })
+                wss.clients.forEach(sock=>{
+                    sock.send(formatedMessage)
+                })
             } else {
                 receiver = new_message['receiver']
                 message = new_message['message']
-                findClientValueById(receiver).send(message)
+                wss.clients.forEach(sock=>{
+                    sock.send(JSON.stringify({"message":message, "sender":receiver, "bot":false}))
+                })
                 console.log("message is sent to the user")
                 console.log(message)
             }
@@ -66,7 +59,6 @@ wss.on('connection', function (socket) {
     });
     socket.on('close', ()=>{
         console.log('a client disconnected')
-        removeClientByValue(socket)
     })
 });
 
