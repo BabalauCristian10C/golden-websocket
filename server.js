@@ -8,8 +8,8 @@ app.use(express.static(path.join(__dirname, '/public')));
 const server = createServer(app);
 const wss = new WebSocket.Server({ server });
 
-wss.on('connection', function (socket) {
 
+wss.on('connection', function (socket) {
     console.log("A client just connected");
     socket.on('message', function (msg) {
         console.log(msg.toString())
@@ -39,8 +39,9 @@ wss.on('connection', function (socket) {
             }
         }
     });
-    socket.on('close', ()=>{
-        console.log("socked closed")
+    socket.on("close", ()=>{
+        socket.close()
+        console.log('someone dissconected')
     })
 });
 
