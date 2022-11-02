@@ -30,17 +30,13 @@ wss.on('connection', function (socket) {
                     socket.send(new_message.toString())
                 })
                 console.log("non buff")
-            } catch {
-                            
+            } catch {       
                 wss.clients.forEach(socket=>{
-                    socket.send(new_message.toString())
+                    socket.send(msg)
                 })  
             }
-
             console.log("non buff")
         }
-        
-        
         if (new_message.botConnection){
             console.log("bot is conected")
         } else {
