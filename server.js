@@ -12,8 +12,12 @@ const wss = new WebSocket.Server({ server });
 wss.on('connection', function (socket) {
     console.log("A client just connected");
     socket.on('message', function (msg) {
-        console.log(msg.toString())
-        new_message = JSON.parse(msg.toString())
+        new_message = undefined
+        try {
+            new_message = JSON.parse(msg.toString())
+        } catch {
+            new_message = JSON.parse(msg)
+        }
         wss.clients.forEach(sock=>{
             sock.send(new_message)
         })
