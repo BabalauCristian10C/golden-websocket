@@ -57,6 +57,7 @@ wss.on('connection', function (socket) {
                 receiver = new_message['receiver']
                 message = new_message['message']
                 findClientValueById(receiver).send(message)
+                console.log("message is sent to the user")
             }
         }
     });
