@@ -16,10 +16,10 @@ function addClient(client){
 }
 
 function findClientValueById(id){
-    return connected.filter(item => item[0]===id)[0][1]
+    return connected.filter(item => item[0]==id)[0][1]
 }
 function findClientIdByValue(client){
-    return connected.filter(item => item[1]===client)[0][0]
+    return connected.filter(item => item[1]==client)[0][0]
 }
 function removeClientById(id){
     return connected = connected.filter(item => item[0]!==id)
@@ -44,10 +44,9 @@ wss.on('connection', function (socket) {
             if(new_message.bot){
                 try{
                     const formatedMessage = JSON.stringify({
-                        "message": new_message.message,
+                        "message": new_message,
                         "sender": findClientIdByValue(socket)
                     })
-                    console.log(formatedMessage)
                     botUrl.send(formatedMessage)  
                     console.log("message is sent to bot")
                 } catch {
