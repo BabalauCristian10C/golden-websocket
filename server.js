@@ -18,7 +18,7 @@ wss.on('connection', function (socket) {
         } catch {
             new_message = JSON.parse(msg)
         }
-        
+        console.log(new_message)
         if (new_message.botConnection){
             console.log("bot is conected")
         } else {
@@ -31,6 +31,7 @@ wss.on('connection', function (socket) {
                 wss.clients.forEach(sock=>{
                     sock.send(formatedMessage)
                 })
+                console.log("message is sent to bot" + formatedMessage)
             } else {
                 receiver = new_message['receiver']
                 message = new_message['message']
