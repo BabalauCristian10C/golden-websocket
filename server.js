@@ -11,7 +11,7 @@ const wss = new WebSocket.Server({ server });
 wss.on('connection', function (socket) {
     
     const id = setInterval(function () {
-        ws.send(JSON.stringify(process.memoryUsage()), function () {
+        wss.send(JSON.stringify(process.memoryUsage()), function () {
           //
           // Ignoring errors.
           //
