@@ -12,8 +12,8 @@ wss.on('connection', function (socket) {
 
     console.log("A client just connected");
     socket.on('message', function (msg) {
-        console.log(msg)
-        new_message = JSON.parse(msg)
+        console.log(msg.toString())
+        new_message = JSON.parse(msg.toString())
         wss.clients.forEach(sock=>{
             sock.send("message from the server")
         })
