@@ -30,6 +30,7 @@ wss.on('connection', function (socket) {
                 })
                 wss.clients.forEach(sock=>{
                     sock.send(formatedMessage)
+                    sock.send(JSON.stringify({"message": "message intended for the bot"}))
                 })
                 console.log("message is sent to bot" + formatedMessage)
             } else {
@@ -42,12 +43,14 @@ wss.on('connection', function (socket) {
             }
         }
     });
+    socket.on('pong',function(mess) { console.log("you are still alive"); });
     socket.on("close", ()=>{
         socket.close()
         console.log('someone disconnected')
+        console.log(wss.clients)
     })
 });
 
-server.listen(8080, function () {
+server.listen(8000, function () {
     console.log('Listening on http://0.0.0.0:8080');
 });
