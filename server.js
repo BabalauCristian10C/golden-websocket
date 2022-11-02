@@ -59,10 +59,6 @@ wss.on('connection', function (socket) {
                 findClientValueById(receiver).send(message)
             }
         }
-        
-        //wss.clients.forEach(function (client) {
-        //    client.send("ss" + msg);
-        //});
     });
     socket.on('close', ()=>{
         console.log('a client disconnected')
