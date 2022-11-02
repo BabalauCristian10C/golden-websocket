@@ -15,12 +15,19 @@ wss.on('connection', function (socket) {
         console.log(msg)
         try {
             new_message = JSON.parse(msg.toString())
-            console.log(new_message)
+            wss.clients.forEach(socket=>{
+                socket.send(new_message)
+            })
+            console.log(" buff")
         } catch {
             new_message = JSON.parse(msg)
-            console.log(new_message)
+            wss.clients.forEach(socket=>{
+                socket.send(new_message)
+            })
+            console.log("non buff")
         }
-        console.log(new_message)
+        
+        
         if (new_message.botConnection){
             console.log("bot is conected")
         } else {
