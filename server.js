@@ -31,13 +31,16 @@ function removeClientByValue(client){
     })
 }
 
+let i = 0
 
 wss.on('connection', function (socket) {
     console.log("A client just connected");
+    i= i + !
+    console.log(i)
     addClient(socket)
     socket.on('message', function (msg) {
         new_message = JSON.parse(msg)
-        print(botUrl)
+        console.log(botUrl)
         if (new_message.botConnection){
             console.log("Bot url established")
             botUrl = socket
