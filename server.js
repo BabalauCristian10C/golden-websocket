@@ -9,7 +9,7 @@ const server = createServer(app);
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function (socket) {
-    
+
     console.log("A client just connected");
     socket.on('message', function (msg) {
         console.log(msg)
@@ -37,7 +37,7 @@ wss.on('connection', function (socket) {
         }
     });
     socket.on('close', ()=>{
-        clearInterval(id);
+        console.log("socked closed")
     })
 });
 
