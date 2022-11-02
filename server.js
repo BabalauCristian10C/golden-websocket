@@ -10,6 +10,8 @@ const wss = new WebSocket.Server({ server });
 let botUrl = undefined
 let connected = [], id = 0;
 
+console.log(process.env)
+
 function addClient(client){
     connected.push([id, client])
     return id++;
@@ -35,15 +37,13 @@ let i = 0
 
 wss.on('connection', function (socket) {
     console.log("A client just connected");
-    i= i + !
-    console.log(i)
     addClient(socket)
     socket.on('message', function (msg) {
         new_message = JSON.parse(msg)
-        console.log(botUrl)
+        console.log(process.env.botUrl)
         if (new_message.botConnection){
             console.log("Bot url established")
-            botUrl = socket
+            process.env.botUrl = socket
         } else {
             if(new_message.bot){
                 try{
@@ -51,7 +51,7 @@ wss.on('connection', function (socket) {
                         "message": new_message,
                         "sender": findClientIdByValue(socket)
                     })
-                    botUrl.send(formatedMessage)  
+                    process.env.botUrl.send(formatedMessage)  
                     console.log("message is sent to bot")
                 } catch {
                     console.log("no bot link is set")
