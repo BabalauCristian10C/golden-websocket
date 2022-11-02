@@ -7,28 +7,6 @@ const app = express();
 app.use(express.static(path.join(__dirname, '/public')));
 const server = createServer(app);
 const wss = new WebSocket.Server({ server });
-let connected = [], id = 0;
-
-function addClient(client){
-    connected.push([id, client])
-    return id++;
-}
-
-function findClientValueById(id){
-    return connected.filter(item => item[0]==id)[0][1]
-}
-function findClientIdByValue(client){
-    return connected.filter(item => item[1]==client)[0][0]
-}
-function removeClientById(id){
-    return connected = connected.filter(item => item[0]!==id)
-}
-
-function removeClientByValue(client){
-    return connected = connected.filter(item => {
-        item[1]!==client
-    })
-}
 
 wss.on('connection', function (socket) {
     console.log("A client just connected");
@@ -52,7 +30,6 @@ wss.on('connection', function (socket) {
                 wss.clients.forEach(sock=>{
                     sock.send(JSON.stringify({"message":message, "sender":receiver, "bot":false}))
                 })
-                console.log("message is sent to the user")
                 console.log(message)
             }
         }
