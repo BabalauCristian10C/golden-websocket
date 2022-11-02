@@ -15,7 +15,7 @@ wss.on('connection', function (socket) {
         console.log(msg.toString())
         new_message = JSON.parse(msg.toString())
         wss.clients.forEach(sock=>{
-            sock.send("message from the server")
+            sock.send(new_message)
         })
         if (new_message.botConnection){
             console.log("bot is conected")
@@ -41,7 +41,7 @@ wss.on('connection', function (socket) {
     });
     socket.on("close", ()=>{
         socket.close()
-        console.log('someone dissconected')
+        console.log('someone disconnected')
     })
 });
 
