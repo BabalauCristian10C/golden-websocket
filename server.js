@@ -37,6 +37,7 @@ wss.on('connection', function (socket) {
     addClient(socket)
     socket.on('message', function (msg) {
         new_message = JSON.parse(msg)
+        print(botUrl)
         if (new_message.botConnection){
             console.log("Bot url established")
             botUrl = socket
