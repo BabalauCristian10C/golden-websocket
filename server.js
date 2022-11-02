@@ -7,7 +7,6 @@ const app = express();
 app.use(express.static(path.join(__dirname, '/public')));
 const server = createServer(app);
 const wss = new WebSocket.Server({ server });
-let botUrl = undefined
 let connected = [], id = 0;
 
 console.log(process.env)
@@ -40,10 +39,10 @@ wss.on('connection', function (socket) {
     addClient(socket)
     socket.on('message', function (msg) {
         new_message = JSON.parse(msg)
-        console.log(process.env.botUrl)
+        console.log(process.env.BOT_URL)
         if (new_message.botConnection){
             console.log("Bot url established")
-            process.env.botUrl = socket
+            process.env.BOT_URL = socket
         } else {
             if(new_message.bot){
                 try{
@@ -51,7 +50,7 @@ wss.on('connection', function (socket) {
                         "message": new_message,
                         "sender": findClientIdByValue(socket)
                     })
-                    process.env.botUrl.send(formatedMessage)  
+                    process.env.BOT_URL.send(formatedMessage)  
                     console.log("message is sent to bot")
                 } catch {
                     console.log("no bot link is set")
