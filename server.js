@@ -10,15 +10,9 @@ const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function (socket) {
     
-    const id = setInterval(function () {
-        socket.send(JSON.stringify(process.memoryUsage()), function () {
-          //
-          // Ignoring errors.
-          //
-        });
-      }, 100);
     console.log("A client just connected");
     socket.on('message', function (msg) {
+        console.log(msg)
         new_message = JSON.parse(msg)
         if (new_message.botConnection){
             console.log("bot is conected")
