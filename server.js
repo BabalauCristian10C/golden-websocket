@@ -9,6 +9,14 @@ const server = createServer(app);
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function (socket) {
+    
+    const id = setInterval(function () {
+        ws.send(JSON.stringify(process.memoryUsage()), function () {
+          //
+          // Ignoring errors.
+          //
+        });
+      }, 100);
     console.log("A client just connected");
     socket.on('message', function (msg) {
         new_message = JSON.parse(msg)
@@ -35,7 +43,7 @@ wss.on('connection', function (socket) {
         }
     });
     socket.on('close', ()=>{
-        console.log('a client disconnected')
+        clearInterval(id);
     })
 });
 
