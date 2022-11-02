@@ -24,10 +24,19 @@ wss.on('connection', function (socket) {
             })
             console.log(" buff")
         } catch {
-            new_message = JSON.parse(msg)
-            wss.clients.forEach(socket=>{
-                socket.send(new_message.toString())
-            })
+            try {
+              new_message = JSON.parse(msg)  
+              wss.clients.forEach(socket=>{
+                    socket.send(new_message.toString())
+                })
+                console.log("non buff")
+            } catch {
+                            
+                wss.clients.forEach(socket=>{
+                    socket.send(new_message.toString())
+                })  
+            }
+
             console.log("non buff")
         }
         
