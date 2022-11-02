@@ -12,12 +12,15 @@ const wss = new WebSocket.Server({ server });
 wss.on('connection', function (socket) {
     console.log("A client just connected");
     socket.on('message', function (msg) {
+        console.log(msg)
         try {
             new_message = JSON.parse(msg.toString())
+            console.log(new_message)
         } catch {
             new_message = JSON.parse(msg)
+            console.log(new_message)
         }
-        
+        console.log(new_message)
         if (new_message.botConnection){
             console.log("bot is conected")
         } else {
@@ -46,6 +49,6 @@ wss.on('connection', function (socket) {
     })
 });
 
-server.listen(8000, function () {
+server.listen(8080, function () {
     console.log('Listening on http://0.0.0.0:8080');
 });
