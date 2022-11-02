@@ -30,7 +30,8 @@ wss.on('connection', function (socket) {
                     socket.send(new_message.toString())
                 })
                 console.log("non buff")
-            } catch {       
+            } catch { 
+                new_message = msg      
                 wss.clients.forEach(socket=>{
                     socket.send(msg)
                 })  
